@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>DDL Killer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- 左侧导航栏 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <span class="material-icons">event</span>
+                <h1>DDL Killer</h1>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-view="all">
+                    <span class="material-icons">dashboard</span>
+                    <span>所有事件</span>
+                </li>
+                <li data-view="urgent">
+                    <span class="material-icons">warning</span>
+                    <span>紧急事件</span>
+                </li>
+                <li data-view="history">
+                    <span class="material-icons">history</span>
+                    <span>历史事件</span>
+                </li>
+                <div id="partition-list"></div>
+            </ul>
+            <div class="user-info">
+                <span class="material-icons">copyright</span>
+                <span>© 2024 By 跑毛</span>
+            </div>
+        </nav>
+        <div class="sidebar-resizer"></div>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <div class="controls">
+                <!-- 第一行：基本控制 -->
+                <div class="controls-row">
+                    <!-- 左侧：显示模式和大小 -->
+                    <div class="control-group">
+                        <label class="view-mode">
+                            显示模式：
+                            <div class="toggle-buttons">
+                                <button class="active" data-mode="grid">
+                                    <span class="material-icons">grid_view</span>
+                                </button>
+                                <button data-mode="list">
+                                    <span class="material-icons">view_list</span>
+                                </button>
+                                <button data-mode="partition">
+                                    <span class="material-icons">dashboard</span>
+                                </button>
+                            </div>
+                        </label>
+                        <label class="list-columns-control" style="display: none;">
+                            每行显示：
+                            <select id="listColumns">
+                                <option value="1">1个事件</option>
+                                <option value="2">2个事件</option>
+                                <option value="3">3个事件</option>
+                            </select>
+                        </label>
+                    </div>
+                    
+                    <!-- 右侧：排序和历史记录 -->
+                    <div class="control-group">
+                        <div class="sort-controls">
+                            <label>
+                                排序方式：
+                                <select id="sortMode">
+                                    <option value="deadline">最紧急优先</option>
+                                    <option value="created-desc">最新创建优先</option>
+                                    <option value="priority-desc">高优先级优先</option>
+                                    <option value="status">未完成优先</option>
+                                </select>
+                            </label>
+                            <button id="toggleSortDirection" class="sort-direction-btn">
+                                <span class="material-icons">arrow_upward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二行：外观设置 -->
+                <div class="controls-row">
+                    <!-- 左侧：标题设置 -->
+                    <div class="control-group">
+                        <label class="title-size-control">
+                            标题大小：
+                            <input type="range" min="12" max="32" value="20" id="titleSize">
+                        </label>
+                    </div>
+
+                    <!-- 右侧：紧急提示设置 -->
+                    <div class="control-group">
+                        <label class="urgent-icon-control">
+                            紧急提示图标：
+                            <select id="urgentIcon">
+                                <option value="warning">⚠️ 警告</option>
+                                <option value="error">❌ 错误</option>
+                                <option value="priority_high">❗ 感叹号</option>
+                                <option value="alarm">⏰ 闹钟</option>
+                                <option value="notification_important">🔔 铃铛</option>
+                            </select>
+                            <input type="color" id="urgentIconColor" value="#ff0000">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 第三行：其他设置 -->
+                <div class="controls-row">
+                    <div class="control-group">
+                        <label class="display-control">
+                            <input type="checkbox" id="showCreationDate">
+                            显示创建日期
+                        </label>
+                        <!-- 添加配色切换按钮 -->
+                        <div class="theme-switcher">
+                            <label>配色方案：</label>
+                            <select id="themeSelect">
+                                <option value="theme1">方案一 (Claude)</option>
+                                <option value="theme2">方案二 (深邃蓝)</option>
+                                <option value="theme3">方案三 (森林绿)</option>
+                                <option value="theme4">方案四 (暖阳橙)</option>
+                                <option value="theme5">方案五 (Anthropic)</option>
+                                <option value="theme6">方案六 (Anthropic 2024)</option>
+                                <option value="theme7">护眼深色模式</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="eventList" class="grid-view"></div>
+        </main>
+
+        <!-- 修改添加事件按钮 -->
+        <button id="addEventBtn" class="add-event-btn">
+            <span class="material-icons">add</span>
+            添加事件
+        </button>
+
+        <!-- 添加事件模态框 -->
+        <div class="modal" id="event-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>添加新事件</h2>
+                    <span class="material-icons close-modal">close</span>
+                </div>
+                <form id="event-form">
+                    <div class="form-group">
+                        <label for="event-title">事件标题</label>
+                        <input type="text" id="event-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-deadline">截止时间</label>
+                        <input type="datetime-local" id="event-deadline" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-priority">优先级</label>
+                        <select id="event-priority">
+                            <option value="low">低</option>
+                            <option value="medium">中</option>
+                            <option value="high">高</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-description">描述</label>
+                        <textarea id="event-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="event-urgent-time">紧急时间（小时）</label>
+                        <input type="number" id="event-urgent-time" min="0" value="24">
+                    </div>
+                    <div class="form-group">
+                        <label for="event-partition">所属分区</label>
+                        <select id="event-partition" class="partition-select">
+                            <option value="">无分区</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">添加事件</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 修改事件编辑模态框 -->
+        <div class="modal" id="edit-event-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">编辑事件</h2>
+                    <span class="material-icons close-modal">close</span>
+                </div>
+                <form id="edit-event-form">
+                    <div class="form-group">
+                        <label for="edit-event-title">事件标题</label>
+                        <input type="text" id="edit-event-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-event-deadline">截止时间</label>
+                        <input type="datetime-local" id="edit-event-deadline" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-event-priority">优先级</label>
+                        <select id="edit-event-priority">
+                            <option value="low">低</option>
+                            <option value="medium">中</option>
+                            <option value="high">高</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-event-description">描述</label>
+                        <textarea id="edit-event-description"></textarea>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="edit-event-completed">
+                            标记为已完成
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-event-partition">所属分区</label>
+                        <select id="edit-event-partition" class="partition-select">
+                            <option value="">无分区</option>
+                            <!-- 分区选项将通过 JavaScript 动态添加 -->
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">保存更改</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 添加分区创建按钮 -->
+        <button class="add-partition-btn">
+            <span class="material-icons">add_box</span>
+            添加分区
+        </button>
+
+        <!-- 添加分区创建模态框 -->
+        <div class="modal" id="partition-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>创建新分区</h2>
+                    <span class="material-icons close-modal">close</span>
+                </div>
+                <form id="partition-form">
+                    <div class="form-group">
+                        <label for="partition-name">分区名称</label>
+                        <input type="text" id="partition-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="partition-color">分区颜色</label>
+                        <input type="color" id="partition-color" value="#e0e0e0">
+                    </div>
+                    <button type="submit" class="submit-btn">创建分区</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 添加分区编辑模态框 -->
+        <div class="modal" id="partition-edit-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>编辑分区</h2>
+                    <span class="material-icons close-modal">close</span>
+                </div>
+                <form id="partition-edit-form">
+                    <div class="form-group">
+                        <label for="edit-partition-name">分区名称</label>
+                        <input type="text" id="edit-partition-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-partition-color">分区颜色</label>
+                        <input type="color" id="edit-partition-color">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">保存更改</button>
+                        <button type="button" id="delete-partition-btn" class="delete-btn">删除分区</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

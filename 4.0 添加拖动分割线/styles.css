@@ -1,0 +1,2172 @@
+:root {
+    --primary-color: #6E59C6;
+    --primary-dark: #5747A1;
+    --background-color: #FFFFFF;
+    --text-color: #2D3748;
+    --secondary-text: #718096;
+    --card-background: #F7FAFC;
+    --hover-color: #EDF2F7;
+    --border-color: #E2E8F0;
+    --shadow-color: rgba(110, 89, 198, 0.1);
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow: 0 2px 8px var(--shadow-color);
+    --title-size: 20px;
+    --font-family: -apple-system, "PingFang SC", "PingFang TC", 
+                   "SF Pro SC", "SF Pro TC", "SF Pro Text", 
+                   "Helvetica Neue", "Microsoft YaHei", 
+                   system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;  /* 字体平滑渲染 */
+    -moz-osx-font-smoothing: grayscale;   /* Firefox字体平滑渲染 */
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    width: 280px;
+    background: var(--card-background);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border-color);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto;
+    transition: width 0.05s ease;
+    min-width: 200px;
+    max-width: 500px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0;
+}
+
+.logo h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.nav-links {
+    list-style: none;
+    margin-top: 40px;
+}
+
+.nav-links li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition);
+    margin: 4px 0;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.nav-links li:hover {
+    background-color: var(--hover-color);
+}
+
+.nav-links li.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-links li.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background-color: white;
+    border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0;
+}
+
+/* 主内容区样式 */
+.main-content {
+    margin-left: 280px;
+    flex: 1;
+    padding: 20px;
+    position: relative;
+    transition: margin-left 0.05s ease;
+}
+
+.controls {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    gap: 24px;
+}
+
+.controls-row:first-child {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.view-mode {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-buttons {
+    display: inline-flex;
+    background: var(--hover-color);
+    padding: 4px;
+    border-radius: var(--border-radius-md);
+    gap: 4px;
+}
+
+.toggle-buttons button {
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-buttons button.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* 下拉框样式 */
+select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-sm);
+    background: white;
+    cursor: pointer;
+}
+
+/* 颜色选择器样式 */
+input[type="color"] {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+}
+
+/* 复选框样式 */
+.display-control input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+/* 标签样式 */
+label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: #666;
+}
+
+/* 事件容器样式 */
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.list-view {
+    display: grid;
+    gap: 15px;
+    width: 100%;
+    padding-right: 20px;
+}
+
+.list-view.columns-1 {
+    grid-template-columns: 1fr;
+}
+
+.list-view.columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.list-view.columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* 添加事件按钮 */
+.add-event-btn,
+.add-partition-btn {
+    position: fixed;
+    right: 30px;
+    height: 48px;
+    width: 140px;
+    padding: 0;
+    border-radius: var(--border-radius-lg);
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.add-event-btn {
+    bottom: 30px;
+}
+
+.add-partition-btn {
+    bottom: 90px;
+}
+
+.add-event-btn:hover,
+.add-partition-btn:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+/* 模态框样式 */
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 100vh;
+    background-color: var(--background-color);
+    display: none;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    border-left: 1px solid var(--border-color);
+}
+
+.modal-content {
+    height: 100%;
+    width: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-background);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: -4px 0 12px var(--shadow-color);
+    overflow-y: auto;
+}
+
+/* 模态框标题样式优化 */
+.modal-header {
+    position: sticky;
+    top: 0;
+    background: var(--card-background);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 20px 24px;
+    margin: -24px -24px 20px -24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+}
+
+.modal-header h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: 500;
+    margin: 0;
+}
+
+.close-modal {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.close-modal:hover {
+    background-color: #f5f5f5;
+}
+
+/* 表单组样式 */
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-group input[type="text"],
+.form-group input[type="datetime-local"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color);
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #6366f1;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.1);
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* 选框组样式 */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+/* 提交按钮样式 */
+.submit-btn {
+    position: sticky;
+    bottom: 0;
+    margin: 20px -24px -24px -24px;
+    padding: 16px 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #4f46e5;
+}
+
+/* 模态框动画 */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 滚动条样式 */
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: sticky;
+        border-radius: 0;
+        padding: 12px;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .user-info {
+        position: relative;
+        margin-top: 20px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .controls {
+        flex-direction: column;
+        margin: 16px;
+        padding: 16px;
+    }
+}
+
+/* 添加新的样式 */
+.event-card {
+    position: relative;
+    background: white;
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    cursor: pointer;
+    display: grid;
+    grid-template-areas:
+        "title checkbox"
+        "countdown checkbox"
+        "description description"
+        "footer footer";
+    grid-template-columns: 1fr 60px;
+    grid-template-rows: auto auto auto auto;
+    gap: 4px;
+    border: none;
+    width: 100%;
+    min-height: 130px;
+}
+
+.event-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* 修改复选框容器样式 */
+.checkbox-wrapper {
+    grid-area: checkbox;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    height: auto;
+    padding: 2px 5px;
+    margin: 0;
+}
+
+/* 修改复选框样式，进一步增大尺寸 */
+.checkbox-wrapper input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+/* 修改复选框选中状态 */
+.checkbox-wrapper input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* 修改复选框选中时的对勾大小和位置 */
+.checkbox-wrapper input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 13px;
+    top: 6px;
+    width: 10px;
+    height: 20px;
+    border: solid white;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+}
+
+/* 复选框悬停效果 */
+.checkbox-wrapper input[type="checkbox"]:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 5px rgba(26, 115, 232, 0.1);
+}
+
+/* 调整其他元素的布局 */
+.event-title {
+    grid-area: title;
+    margin: 0;
+    padding-right: 10px;
+    font-size: var(--title-size, 20px);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    transition: font-size 0.3s ease;
+}
+
+.countdown {
+    grid-area: countdown;
+    color: var(--primary-color);
+    font-size: 13px;
+    margin: 0;
+}
+
+/* 修改描述样式 */
+.event-description {
+    grid-area: description;
+    font-size: 13px;
+    position: relative;
+    overflow: hidden;
+    min-height: 40px;
+    line-height: 1.2;
+    max-height: calc(1.2em * 2);
+}
+
+/* 现代浏览器的多行文本截断 */
+@supports (display: -webkit-box) {
+    .event-description {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        text-overflow: ellipsis;
+    }
+}
+
+/* 降级方案 */
+@supports not (display: -webkit-box) {
+    .event-description {
+        display: block;
+        padding-right: 1em;
+    }
+    
+    .event-description::after {
+        content: "...";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 40%;
+        height: 1.2em;
+        background: linear-gradient(to right, transparent, white 50%);
+        text-align: right;
+        padding-left: 40px;
+    }
+}
+
+.event-footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+}
+
+/* 优先标签样式 */
+.priority-badge {
+    font-size: 12px;
+    color: #666;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+}
+
+/* 模态框改进样式 */
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: var(--border-radius-sm);
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+}
+
+/* 完成动画效果 */
+@keyframes complete-explosion {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.event-card.completing {
+    animation: complete-explosion 0.5s ease-out forwards;
+}
+
+/* 彩花动画 */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* 修改分区容器样式 */
+.partition {
+    margin: 16px 20px;
+    background: var(--card-background);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    width: calc(100% - 40px);
+    box-sizing: border-box;
+    height: auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+/* 修改分区标题样式 */
+.partition-header {
+    padding: 16px;
+    min-width: 120px;
+    border-right: 1px solid var(--border-color);
+}
+
+/* 修改分区标题组样式 */
+.partition-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* 修改事件容器样式 */
+.partition .grid-view,
+.partition .list-view {
+    flex: 1;
+    padding: 16px;
+    margin: 0;
+}
+
+/* 响应式布局优化 */
+@media (max-width: 768px) {
+    .partition {
+        flex-direction: column;
+    }
+    
+    .partition-header {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        min-width: auto;
+    }
+}
+
+/* 优化空分区提示的位置 */
+.partition .no-events {
+    padding: 16px;
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 14px;
+    background: var(--hover-color);
+    margin: 16px;
+    border-radius: var(--border-radius-md);
+    grid-column: 1 / -1;
+}
+
+/* 深色主题适配 */
+.theme7 .partition {
+    background: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.theme7 .partition .event-card {
+    background: rgba(44, 44, 46, 0.8);
+}
+
+/* 拖拽相关样式 */
+.dragging {
+    opacity: 0.5;
+}
+
+.drag-over {
+    border: 2px dashed var(--primary-color);
+}
+
+/* 紧图标样式 */
+.urgent-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+/* 导航栏分区列表样式 */
+#partition-list {
+    margin-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+}
+
+#partition-list li {
+    padding-left: 30px;
+}
+
+/* 添加分区按钮样式优化 */
+.add-partition-btn {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    height: 48px;
+    padding: 0 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.add-partition-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(152, 185, 242, 0.25);
+}
+
+.add-partition-btn .material-icons {
+    font-size: 20px;
+}
+
+/* 创建日期样式 */
+.creation-date {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* 分区编辑模态框的按钮样式 */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.delete-btn {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    flex: 1;
+}
+
+.delete-btn:hover {
+    background-color: #C82333;
+}
+
+/* 分区列表项的交互样式 */
+.partition-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition);
+}
+
+.partition-list-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 历史件卡片样式 */
+.event-card.completed {
+    background-color: #f8f9fa;
+    border-left: 4px solid #6c757d;
+}
+
+.event-meta {
+    font-size: 0.9em;
+    color: #666;
+    margin: 10px 0;
+}
+
+.event-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.delete-permanently-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.delete-permanently-btn:hover {
+    background-color: #C82333;
+}
+
+.no-events {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.2em;
+}
+
+/* 添加清除所有按钮样式 */
+.clear-all-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px auto;
+    padding: 12px 24px;
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-size: 1em;
+    transition: var(--transition);
+    box-shadow: 0 2px 6px rgba(220, 53, 69, 0.3);
+}
+
+.clear-all-btn:hover {
+    background-color: #C82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+}
+
+.clear-all-btn .material-icons {
+    font-size: 20px;
+}
+
+/* 添加撤销提示式 */
+.undo-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius-md);
+    font-size: 14px;
+    z-index: 1000;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translate(-50%, 20px); }
+    15% { opacity: 1; transform: translate(-50%, 0); }
+    85% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
+/* 添加恢复按钮样式 */
+.restore-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-right: 10px;
+}
+
+.restore-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* 修改事件操作按钮容器样式 */
+.event-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+/* 修改描述样式 */
+.event-description {
+    grid-area: description;
+    font-size: 13px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 40px;
+}
+
+/* 修改网布局 */
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* 在最小尺寸时隐藏次要信息 */
+@media (max-width: 200px) {
+    .event-card .event-description,
+    .event-card .creation-date,
+    .event-card .event-meta {
+        display: none;
+    }
+}
+
+/* 修改优先级标签样式 */
+.priority-badge {
+    font-size: 12px;
+    color: #666;
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+}
+
+/* 应式布局调整 */
+@media (max-width: 1200px) {
+    .grid-view, .partition-content {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-view, .partition-content {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 12px;
+        padding: 0 12px;
+    }
+    
+    .partition .grid-view {
+        margin: 0 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-view, .partition-content {
+        grid-template-columns: 1fr;
+        padding: 0 8px;
+    }
+    
+    .partition .grid-view {
+        margin: 0 8px;
+    }
+}
+
+/* 修改事件卡片中的复选框样式 */
+.event-footer input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 30px;  /* 增加复选框大小 */
+    height: 30px; /* 增加复选框大小 */
+    border: 3px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0;
+}
+
+/* 修改复选框选中状态 */
+.event-footer input[type="checkbox"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* 修改复选框选中时的对勾 */
+.event-footer input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 4px;
+    width: 8px;
+    height: 16px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* 复选框悬停效果 */
+.event-footer input[type="checkbox"]:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.1);
+}
+
+/* 添加排序控件样式 */
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 排序方向按钮样式 */
+.sort-direction-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.sort-direction-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.sort-direction-btn .material-icons {
+    font-size: 20px;
+}
+
+/* 排序下拉框样式优化 */
+#sortMode {
+    min-width: 120px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-sm);
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#sortMode:hover {
+    border-color: var(--primary-color);
+}
+
+#sortMode:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.1);
+}
+
+select:focus, 
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--shadow-color);
+}
+
+/* 添加配色切换控件样式 */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.theme-switcher select {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    background: white;
+    cursor: pointer;
+    min-width: 150px;
+}
+
+/* 定义其他配色方案 */
+.theme2 {
+    --primary-color: #1E88E5;      /* 深邃蓝 */
+    --primary-dark: #1565C0;
+    --shadow-color: rgba(30, 136, 229, 0.1);
+}
+
+.theme3 {
+    --primary-color: #43A047;      /* 森林绿 */
+    --primary-dark: #2E7D32;
+    --shadow-color: rgba(67, 160, 71, 0.1);
+}
+
+.theme4 {
+    --primary-color: #FB8C00;      /* 暖阳橙 */
+    --primary-dark: #F57C00;
+    --shadow-color: rgba(251, 140, 0, 0.1);
+}
+
+/* 在已有的主题定义后添新的 Anthropic 主题 */
+.theme5 {
+    --primary-color: #5E44A5;        /* Anthropic 色调-紫色 */
+    --primary-dark: #4A357F;         /* 深紫色 */
+    --background-color: #FAFAFA;     /* 浅灰景色 */
+    --text-color: #1A1A1A;           /* 深色文字 */
+    --secondary-text: #666666;       /* 次要文字颜色 */
+    --card-background: #FFFFFF;      /* 纯白卡背景 */
+    --hover-color: #F5F5F5;         /* 悬停背景色 */
+    --border-color: #E5E5E5;        /* 边框颜色 */
+    --shadow-color: rgba(94, 68, 165, 0.1); /* 紫色阴影 */
+}
+
+/* 添加 Anthropic 2024 主题 */
+.theme6 {
+    --primary-color: #E5A9A2;        /* Anthropic 2024珊瑚粉色 */
+    --primary-dark: #D49089;         /* 深珊瑚色 */
+    --background-color: #F6F3EF;     /* 米色背景 */
+    --text-color: #1A1A1A;           /* 深色文字 */
+    --secondary-text: #666666;       /* 次要文字颜色 */
+    --card-background: #FFFFFF;      /* 修改卡片背景色为 #ebdbbc */
+    --hover-color: #FAF7F7;         /* 浅粉色悬停背景 */
+    --border-color: #E8E6E3;        /* 浅灰边框 */
+    --shadow-color: rgba(229, 169, 162, 0.1); /* 珊瑚色阴影 */
+}
+
+/* Apple Dark Theme (theme7) */
+.theme7 {
+    /* 基础色彩系统 */
+    --primary-color: #98B9F2;        /* 活力蓝，类似 iOS 链接色 */
+    --primary-dark: #7AA1E5;         /* 深蓝色，用于激活态 */
+    --background-color: #000000;     /* 纯黑背景，提供最佳对比度 */
+    --text-color: #FFFFFF;           /* 主要文字为纯白 */
+    --secondary-text: #98989E;       /* iOS 次要文字色 */
+    --card-background: #1C1C1E;      /* iOS 暗色卡片背景 */
+    --hover-color: #2C2C2E;          /* iOS 级背景色 */
+    --border-color: #38383A;         /* iOS 分割线颜色 */
+    --shadow-color: rgba(0, 0, 0, 0.5); /* 深色阴影 */
+    --danger-color: #FF453A;         /* iOS 系统红色 */
+    
+    /* 额外的系统色彩 */
+    --success-color: #32D74B;        /* iOS 系统绿色 */
+    --warning-color: #FFD60A;        /* iOS 系统黄色 */
+    --system-gray: #8E8E93;          /* iOS 系统灰色 */
+}
+
+/* 事件卡片样式优化 */
+.theme7 .event-card {
+    background-color: rgba(28, 28, 30, 0.8);  /* 半透明背景 */
+    backdrop-filter: blur(20px);              /* 磨砂玻璃效果 */
+    -webkit-backdrop-filter: blur(20px);      
+    border: 0.5px solid var(--border-color);  /* 极细边框 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.theme7 .event-card:hover {
+    background-color: rgba(44, 44, 46, 0.8);  /* 悬停时稍亮 */
+    transform: translateY(-1px);              /* 轻微上浮效 */
+}
+
+/* 文字样式优化 */
+.theme7 .event-card .event-title {
+    color: var(--text-color);
+    font-weight: 600;                         /* SF Pro Display 中等粗细 */
+    letter-spacing: -0.01em;                  /* 稍微紧凑的字间距 */
+}
+
+.theme7 .event-card .event-description {
+    color: var(--secondary-text);
+    font-weight: 400;                         /* Regular 字重 */
+    line-height: 1.4;                         /* 优化行高 */
+}
+
+.theme7 .event-card .countdown {
+    color: var(--primary-color);
+    font-weight: 500;                         /* Medium 字重 */
+    font-variant-numeric: tabular-nums;       /* 等宽数字 */
+}
+
+/* 控件样式优化 */
+.theme7 .controls {
+    background-color: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 0.5px solid var(--border-color);
+}
+
+.theme7 .sidebar {
+    background-color: rgba(28, 28, 30, 0.9);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-right: 0.5px solid var(--border-color);
+}
+
+/* 优化按钮样式 */
+.theme7 .add-event-btn {
+    background: var(--primary-color);
+    box-shadow: 0 2px 8px rgba(152, 185, 242, 0.3);
+}
+
+.theme7 .add-event-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.02);
+}
+
+/* 分别定义不同表单元素的样式 */
+.theme7 input,
+.theme7 textarea {
+    background-color: rgba(44, 44, 46, 0.8);
+    border: 0.5px solid var(--border-color);
+    color: var(--text-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* 单独定义 select 的样式 */
+.theme7 .form-group select,  /* 增加优先级 */
+.theme7 select {
+    color: #FFFFFF !important;  /* 使用 !important 确保优先级 */
+    background-color: #1C1C1E !important;  /* 使用固定的深色背景 */
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-sm);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 模态框样式 */
+.theme7 .modal-content {
+    background-color: rgba(28, 28, 30, 0.95);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 0.5px solid var(--border-color);
+}
+
+/* 优先级标签样式 */
+.theme7 .priority-badge {
+    background-color: rgba(152, 185, 242, 0.1);
+    color: var(--primary-color);
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* 确保文本截断效果与深色主题匹配 */
+.theme7 .event-description::after {
+    background: linear-gradient(to right, transparent, rgba(28, 28, 30, 0.95));
+}
+
+/* Claude 主题 (theme1) - 优雅紫色风格 */
+.theme1 {
+    --primary-color: #6E59C6;
+    --primary-dark: #5747A1;
+    --background-color: #F5F6FA;
+    --text-color: #1A1A1A;
+    --secondary-text: #666666;
+    --card-background: rgba(255, 255, 255, 0.8);
+    --hover-color: rgba(110, 89, 198, 0.05);
+    --border-color: rgba(110, 89, 198, 0.1);
+    --shadow-color: rgba(110, 89, 198, 0.1);
+    --danger-color: #FF453A;
+}
+
+/* 深邃蓝主题 (theme2) - 海洋风格 */
+.theme2 {
+    --primary-color: #1E88E5;
+    --primary-dark: #1565C0;
+    --background-color: #F0F7FF;
+    --text-color: #1A1A1A;
+    --secondary-text: #666666;
+    --card-background: rgba(255, 255, 255, 0.8);
+    --hover-color: rgba(30, 136, 229, 0.05);
+    --border-color: rgba(30, 136, 229, 0.1);
+    --shadow-color: rgba(30, 136, 229, 0.1);
+    --danger-color: #FF453A;
+}
+
+/* 森林绿主题 (theme3) - 自然风格 */
+.theme3 {
+    --primary-color: #43A047;
+    --primary-dark: #2E7D32;
+    --background-color: #F5FAF5;
+    --text-color: #1A1A1A;
+    --secondary-text: #666666;
+    --card-background: rgba(255, 255, 255, 0.8);
+    --hover-color: rgba(67, 160, 71, 0.05);
+    --border-color: rgba(67, 160, 71, 0.1);
+    --shadow-color: rgba(67, 160, 71, 0.1);
+    --danger-color: #FF453A;
+}
+
+/* 暖阳橙主题 (theme4) - 阳光风格 */
+.theme4 {
+    --primary-color: #FB8C00;
+    --primary-dark: #F57C00;
+    --background-color: #FFF8F0;
+    --text-color: #1A1A1A;
+    --secondary-text: #666666;
+    --card-background: rgba(255, 255, 255, 0.8);
+    --hover-color: rgba(251, 140, 0, 0.05);
+    --border-color: rgba(251, 140, 0, 0.1);
+    --shadow-color: rgba(251, 140, 0, 0.1);
+    --danger-color: #FF453A;
+}
+
+/* Anthropic主题 (theme5) - 科技紫风格 */
+.theme5 {
+    --primary-color: #5E44A5;
+    --primary-dark: #4A357F;
+    --background-color: #F8F6FF;
+    --text-color: #1A1A1A;
+    --secondary-text: #666666;
+    --card-background: rgba(255, 255, 255, 0.8);
+    --hover-color: rgba(94, 68, 165, 0.05);
+    --border-color: rgba(94, 68, 165, 0.1);
+    --shadow-color: rgba(94, 68, 165, 0.1);
+    --danger-color: #FF453A;
+}
+
+/* Anthropic 2024主题 (theme6) - 珊瑚粉风格 */
+.theme6 {
+    --primary-color: #E5A9A2;
+    --primary-dark: #D49089;
+    --background-color: #FFF5F3;
+    --text-color: #1A1A1A;
+    --secondary-text: #666666;
+    --card-background: rgba(235, 219, 188, 0.8);
+    --hover-color: rgba(229, 169, 162, 0.05);
+    --border-color: rgba(229, 169, 162, 0.1);
+    --shadow-color: rgba(229, 169, 162, 0.1);
+    --danger-color: #FF453A;
+}
+
+/* 为所有浅色主题添加通用的苹果风格样式 */
+.theme1, .theme2, .theme3, .theme4, .theme5, .theme6 {
+    /* 系统颜色 */
+    --success-color: #32D74B;
+    --warning-color: #FFD60A;
+    --system-gray: #8E8E93;
+}
+
+/* 为所有浅色主题的卡片添加磨砂效果 */
+.theme1 .event-card,
+.theme2 .event-card,
+.theme3 .event-card,
+.theme4 .event-card,
+.theme5 .event-card,
+.theme6 .event-card {
+    background-color: var(--card-background);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 0.5px solid var(--border-color);
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+/* 卡片悬效果 */
+.theme1 .event-card:hover,
+.theme2 .event-card:hover,
+.theme3 .event-card:hover,
+.theme4 .event-card:hover,
+.theme5 .event-card:hover,
+.theme6 .event-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px var(--shadow-color);
+}
+
+/* 控件样式 */
+.theme1 .controls,
+.theme2 .controls,
+.theme3 .controls,
+.theme4 .controls,
+.theme5 .controls,
+.theme6 .controls {
+    background-color: var(--card-background);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 0.5px solid var(--border-color);
+}
+
+/* 侧边栏样式 */
+.theme1 .sidebar,
+.theme2 .sidebar,
+.theme3 .sidebar,
+.theme4 .sidebar,
+.theme5 .sidebar,
+.theme6 .sidebar {
+    background-color: var(--card-background);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-right: 0.5px solid var(--border-color);
+}
+
+/* 按钮样 */
+.theme1 .add-event-btn,
+.theme2 .add-event-btn,
+.theme3 .add-event-btn,
+.theme4 .add-event-btn,
+.theme5 .add-event-btn,
+.theme6 .add-event-btn {
+    background: var(--primary-color);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+/* 表单元样式 */
+.theme1 input, .theme1 select, .theme1 textarea,
+.theme2 input, .theme2 select, .theme2 textarea,
+.theme3 input, .theme3 select, .theme3 textarea,
+.theme4 input, .theme4 select, .theme4 textarea,
+.theme5 input, .theme5 select, .theme5 textarea,
+.theme6 input, .theme6 select, .theme6 textarea {
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 0.5px solid var(--border-color);
+}
+
+/* 模态框样式 */
+.theme1 .modal-content,
+.theme2 .modal-content,
+.theme3 .modal-content,
+.theme4 .modal-content,
+.theme5 .modal-content,
+.theme6 .modal-content {
+    background-color: var(--card-background);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 0.5px solid var(--border-color);
+}
+
+/* 优先级标签样式 */
+.theme1 .priority-badge,
+.theme2 .priority-badge,
+.theme3 .priority-badge,
+.theme4 .priority-badge,
+.theme5 .priority-badge,
+.theme6 .priority-badge {
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* 文字样式优化 */
+.theme1 .event-title,
+.theme2 .event-title,
+.theme3 .event-title,
+.theme4 .event-title,
+.theme5 .event-title,
+.theme6 .event-title {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* 倒计时样式 */
+.theme1 .countdown,
+.theme2 .countdown,
+.theme3 .countdown,
+.theme4 .countdown,
+.theme5 .countdown,
+.theme6 .countdown {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 修改深色主题下拉菜单的样式 */
+.theme7 select {
+    color: var(--text-color);  /* 使用主题的文字颜变量 */
+    background-color: var(--card-background);  /* 使用主题的卡片背景色变量 */
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: var(--border-radius-sm);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* 下拉选项的样式 */
+.theme7 select option {
+    background-color: #1C1C1E;
+    color: #FFFFFF;
+    padding: 8px 12px;
+}
+
+/* 选中项的样式 */
+.theme7 select option:checked {
+    background-color: var(--primary-color);
+}
+
+/* 悬停和焦点状态 */
+.theme7 select:hover,
+.theme7 select:focus {
+    background-color: #2C2C2E !important;
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* 分区相关样式 */
+.partition-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    margin: 4px 0;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.partition-item:hover {
+    background-color: var(--hover-color);
+}
+
+.partition-item-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.partition-name {
+    flex: 1;
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.partition-count {
+    font-size: 0.85em;
+    color: var(--secondary-text);
+    background: var(--hover-color);
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-left: 12px;
+}
+
+.partition-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px;
+    color: var(--secondary-text);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Toast 提示样式 */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: var(--border-radius-md);
+    font-size: 14px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    animation: toast-in-out 2s ease-in-out;
+}
+
+@keyframes toast-in-out {
+    0% { opacity: 0; transform: translate(-50%, 20px); }
+    20%, 80% { opacity: 1; transform: translate(-50%, 0); }
+    100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
+/* 深色模式适配 */
+.theme7 .partition-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme7 .partition-count {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--secondary-text);
+}
+
+/* 分区标签样式 */
+.partition-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.partition-badge .material-icons {
+    font-size: 14px;
+}
+
+/* 事件卡片底部样式调整 */
+.event-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* 上下文菜单样式 */
+.context-menu {
+    position: fixed;
+    background: var(--card-background);
+    border: 0.5px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 8px 0;
+    min-width: 160px;
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-color);
+}
+
+.context-menu-item:hover {
+    background-color: var(--hover-color);
+}
+
+.context-menu-item .material-icons {
+    font-size: 18px;
+}
+
+/* 深色模式适配 */
+.theme7 .context-menu {
+    background-color: rgba(28, 28, 30, 0.95);
+    border-color: var(--border-color);
+}
+
+.theme7 .context-menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 事件卡片点击效 */
+.event-card {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.event-card:active {
+    transform: scale(0.98);
+}
+
+/* 添加滑入动画 */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 添加滑出动画 */
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* 添加分区容器样式 */
+.partition {
+    margin: 16px 20px;
+    background: var(--card-background);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    width: calc(100% - 40px);
+    box-sizing: border-box;
+    height: auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+/* 修改分区标题样式 */
+.partition-header {
+    padding: 16px;
+    min-width: 120px;
+    border-right: 1px solid var(--border-color);
+}
+
+/* 修改分区标题组样式 */
+.partition-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* 修改事件容器样式 */
+.partition .grid-view,
+.partition .list-view {
+    flex: 1;
+    padding: 16px;
+    margin: 0;
+}
+
+/* 响应式布局优化 */
+@media (max-width: 768px) {
+    .partition {
+        flex-direction: column;
+    }
+    
+    .partition-header {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        min-width: auto;
+    }
+}
+
+/* 优化空分区提示的位置 */
+.partition .no-events {
+    padding: 16px;
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 14px;
+    background: var(--hover-color);
+    margin: 16px;
+    border-radius: var(--border-radius-md);
+    grid-column: 1 / -1;
+}
+
+/* 深色主题适配 */
+.theme7 .partition {
+    background: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.theme7 .partition .event-card {
+    background: rgba(44, 44, 46, 0.8);
+}
+
+/* 分区视图样式 */
+.partition-view {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 0 20px;
+}
+
+.partition-view .partition {
+    margin: 0;
+    width: 100%;
+}
+
+.partition-view .partition .grid-view {
+    padding: 16px;
+    gap: 16px;
+    margin: 0;
+}
+
+/* 优化分区标题样式 */
+.partition-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.partition-title-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 分区内事件网格局优化 */
+.partition .grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+/* 响应式布局优化 */
+@media (max-width: 768px) {
+    .partition-view {
+        padding: 0 12px;
+    }
+    
+    .partition .grid-view {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 修改 user-info 样式 */
+.user-info {
+    margin-top: auto;
+    padding: 15px;
+    padding-bottom: 25px; /* 增加底部内边距，使署名向下移动 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--secondary-text);
+    font-size: 14px;
+    background: inherit;
+    /* 删除边框线 border-top: 1px solid var(--border-color); */
+}
+
+.user-info .material-icons {
+    font-size: 20px;
+}
+
+.user-info:hover {
+    color: var(--primary-color);
+}
+
+/* 响应式布局下的样式调整 */
+@media (max-width: 768px) {
+    .user-info {
+        margin-top: 20px;
+        padding-bottom: 20px; /* 移动端下稍微减少底部内边距 */
+        /* 删除边框线 border-top: 1px solid var(--border-color); */
+    }
+}
+
+/* 美化颜色选择器 */
+#urgentIconColor {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 24px;  /* 从30px减小到24px */
+    height: 24px; /* 从30px减小到24px */
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15); /* 稍微减小阴影 */
+    vertical-align: middle;
+    transition: transform 0.2s ease;
+}
+
+#urgentIconColor::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+#urgentIconColor::-webkit-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+#urgentIconColor::-moz-color-swatch {
+    border: none;
+    border-radius: 50%;
+}
+
+/* 调整悬停效果的缩放比例 */
+#urgentIconColor:hover {
+    transform: scale(1.08); /* 从1.1减小到1.08 */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2); /* 稍微减小阴影 */
+}
+
+/* 调整点击效果的缩放比例 */
+#urgentIconColor:active {
+    transform: scale(0.96); /* 从0.95调整到0.96 */
+}
+
+/* 调整颜色选择器和下拉框的布局 */
+.urgent-icon-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.urgent-icon-control select {
+    margin-right: 10px;
+}
+
+/* 标题字体优化 */
+h1, h2, h3, h4, h5, h6,
+.logo h1,
+.event-title {
+    font-family: var(--font-family);
+    font-weight: 600;  /* SF Pro Display 的中等粗细 */
+    letter-spacing: -0.01em;  /* 轻微收紧字间距 */
+}
+
+/* 正文文本优化 */
+p, 
+.event-description,
+.countdown,
+label,
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-family);
+    font-weight: 400;  /* Regular 字重 */
+}
+
+/* 数字文本优化 */
+.countdown,
+.priority-badge,
+.partition-count {
+    font-variant-numeric: tabular-nums;  /* 等宽数字 */
+    font-feature-settings: "tnum";       /* 支持等宽数字特性 */
+}
+
+/* 控制面板容器样式优化 */
+.controls {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+/* 控制面板行样式优化 */
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    gap: 24px;
+}
+
+/* 第一行：显示模式和排序 */
+.controls-row:first-child {
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 左侧控制组 */
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+/* 显示模式按钮组 */
+.view-mode {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 排序控件组 */
+.sort-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto; /* 将排序控件推到右边 */
+}
+
+/* 第二行：标题大小和紧急提示设置 */
+.controls-row:last-child {
+    margin-top: 8px;
+}
+
+/* 标题大小控制 */
+.title-size-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+/* 紧急提示控制 */
+.urgent-icon-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto; /* 将紧急提示控件推到右边 */
+}
+
+/* 美化滑块样式 */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 4px;
+    background: var(--hover-color);
+    border-radius: 2px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+/* 优化下拉框和按钮样式 */
+select, button {
+    height: 36px;
+    padding: 0 12px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    background: white;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* 标签样式优化 */
+label {
+    font-size: 14px;
+    color: var(--secondary-text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 添加resizer样式 */
+.sidebar-resizer {
+    position: fixed;
+    top: 0;
+    left: 280px; /* 与sidebar初始宽度相同 */
+    width: 12px; /* 增加宽度到12px */
+    height: 100%;
+    background: transparent;
+    cursor: col-resize;
+    z-index: 100;
+    transition: all 0.2s ease;
+    margin-left: -6px; /* 向左偏移一半宽度，这样看起来还是在边界上 */
+}
+
+/* 添加中间的拖动指示线 */
+.sidebar-resizer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px; /* 视觉上的线宽2px */
+    height: 100%;
+    background-color: var(--border-color);
+    transition: all 0.2s ease;
+}
+
+/* 悬停和拖动状态 */
+.sidebar-resizer:hover::after,
+.sidebar-resizer.resizing::after {
+    background-color: var(--primary-color);
+    width: 3px; /* 悬停时线变粗 */
+}
+
+/* 拖动时的状态 */
+.sidebar-resizer.resizing {
+    background-color: rgba(0, 0, 0, 0.05); /* 整个区域有浅色背景 */
+}
+
+/* 深色主题适配 */
+.theme7 .sidebar-resizer:hover::after,
+.theme7 .sidebar-resizer.resizing::after {
+    background-color: var(--primary-color);
+}
+
+.theme7 .sidebar-resizer.resizing {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
